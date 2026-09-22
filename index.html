@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS & Programming Fundamentals: 50-Item Master Exam</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .char-input {
+            width: 2.2rem;
+            height: 2.6rem;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 2px solid #cbd5e1;
+            border-radius: 0.375rem;
+            transition: all 0.15s ease-in-out;
+            background-color: #f8fafc;
+        }
+        .char-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+            background-color: #ffffff;
+        }
+        .char-input.correct {
+            border-color: #22c55e;
+            background-color: #f0fdf4;
+            color: #15803d;
+        }
+        .char-input.incorrect {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+            color: #b91c1c;
+        }
+        .char-input:disabled {
+            cursor: not-allowed;
+            opacity: 0.9;
+        }
+        .space-box {
+            width: 1rem;
+            display: inline-block;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+                /* Styles the wrapper that holds the buttons */
+        .pagination-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        /* Turns the basic link text into a button */
+        .btn-nav {
+            text-decoration: none; /* Removes underline */
+            padding: 12px 24px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        /* Gray color for Previous */
+        .prev-btn {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Green color for Next */
+        .next-btn {
+            background-color: #04AA6D;
+            color: white;
+            border-color: #04AA6D;
+        }
+
+        /* Darkens the color slightly when hovering over them */
+        .btn-nav:hover {
+            opacity: 0.85;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+
+    <!-- Header -->
+    <header class="bg-slate-800 border-b border-slate-700 sticky top-0 z-50 shadow-md">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-blue-600 p-2 rounded-lg text-white">
+                    <i class="fa-solid fa-code text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-white leading-tight">CS & Programming Mastery Exam</h1>
+                    <p class="text-xs text-slate-400">50 Interactive Bracket Fill-in-the-Blank Questions</p>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="flex items-center space-x-6 text-sm">
+                <div class="bg-slate-900/60 px-3 py-1.5 rounded-md border border-slate-700 flex items-center space-x-2">
+                    <i class="fa-solid fa-trophy text-amber-400"></i>
+                    <span class="text-slate-400">Score:</span>
+                    <span id="score-display" class="font-bold text-white">0 / 50</span>
+                </div>
+                <div class="bg-slate-900/60 px-3 py-1.5 rounded-md border border-slate-700 flex items-center space-x-2">
+                    <i class="fa-solid fa-bars-progress text-blue-400"></i>
+                    <span class="text-slate-400">Completed:</span>
+                    <span id="completed-display" class="font-bold text-white">0%</span>
+                </div>
+                <button id="reset-all-btn" class="bg-rose-600/80 hover:bg-rose-600 text-white text-xs px-3 py-1.5 rounded transition">
+                    <i class="fa-solid fa-rotate-right mr-1"></i> Reset
+                </button>
+            </div>
+        </div>
+        <!-- Progress Bar -->
+        <div class="w-full bg-slate-700 h-1.5">
+            <div id="progress-bar" class="bg-blue-500 h-1.5 w-0 transition-all duration-300"></div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+        <!-- Sidebar Navigation / Filters -->
+        <aside class="lg:col-span-1 space-y-4">
+            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 shadow-sm sticky top-20">
+                <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-3">Sections</h2>
+                <nav class="space-y-1 text-sm" id="section-nav">
+                    <button data-section="all" class="section-btn active w-full text-left px-3 py-2 rounded-lg font-medium transition bg-blue-600 text-white">
+                        All Questions (50)
+                    </button>
+                    <button data-section="1" class="section-btn w-full text-left px-3 py-2 rounded-lg font-medium transition text-slate-400 hover:bg-slate-700 hover:text-white">
+                        1. Array Basics & Indexing
+                    </button>
+                    <button data-section="2" class="section-btn w-full text-left px-3 py-2 rounded-lg font-medium transition text-slate-400 hover:bg-slate-700 hover:text-white">
+                        2. Multi-Dimensional Arrays
+                    </button>
+                    <button data-section="3" class="section-btn w-full text-left px-3 py-2 rounded-lg font-medium transition text-slate-400 hover:bg-slate-700 hover:text-white">
+                        3. Regular Expressions
+                    </button>
+                    <button data-section="4" class="section-btn w-full text-left px-3 py-2 rounded-lg font-medium transition text-slate-400 hover:bg-slate-700 hover:text-white">
+                        4. Data Structures & Memory
+                    </button>
+                    <button data-section="5" class="section-btn w-full text-left px-3 py-2 rounded-lg font-medium transition text-slate-400 hover:bg-slate-700 hover:text-white">
+                        5. Algorithms & CS Theory
+                    </button>
+                </nav>
+
+                <hr class="border-slate-700 my-4">
+
+                <div class="space-y-2">
+                    <button id="check-all-btn" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-2 px-4 rounded-lg text-sm transition shadow">
+                        <i class="fa-solid fa-check-double mr-1.5"></i> Check All Answers
+                    </button>
+                    <button id="reveal-all-btn" class="w-full bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium py-2 px-4 rounded-lg text-sm transition">
+                        <i class="fa-solid fa-eye mr-1.5"></i> Reveal All Answers
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Question List Area -->
+        <section class="lg:col-span-3 space-y-4" id="questions-container">
+            <!-- Questions rendered via JS -->
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 border-t border-slate-700 py-4 text-center text-xs text-slate-400">
+        <p>Interactive 50-Item Computer Science Exam • Built for Interactive Practice</p>
+    </footer>
+
+    <script>
+        const questionsData = [
+            // Section 1: Array Basics & Indexing (10 Questions)
+            {
+                id: 1,
+                section: 1,
+                sectionTitle: "1. Array Basics & Indexing",
+                question: "In most modern programming languages like Python, C++, and Java, array indices start at what numeric value?",
+                answer: "ZERO",
+                hint: "It represents the origin point in zero-based indexing.",
+                explanation: "Zero-based indexing means the first element of an array is at offset 0 from the base memory address."
+            },
+            {
+                id: 2,
+                section: 1,
+                sectionTitle: "1. Array Basics & Indexing",
+                question: "An array stores items of the same type in sequential memory locations. What is the technical term for this arrangement?",
+                answer: "CONTIGUOUS",
+                hint: "Starts with 'C'. Means touching or sharing a continuous border.",
+                explanation: "Contiguous memory layout enables direct, instant memory address calculation using an index."
+            },
+            {
+                id: 3,
+                section: 1,
+                sectionTitle: "1. Array Basics & Indexing",
+                question: "In an array of length N, what is the index of the last element?",
+                answer: "N MINUS ONE",
+                hint: "Three words: N ____ ___.",
+                explanation: "Because indices run from 0 to N-1, the last item is always located at index N - 1."
+            },
+            {
+                id: 4,
+                section: 1,
+                sectionTitle: "1. Array Basics & Indexing",
+                question: "What numerical distance or calculation specifies how far an element is from the beginning of an array?",
+                answer: "OFFSET",
+                hint: "Starts with 'O'. Represents distance from the array's starting memory address.",
+                explanation: "Index 0 has an offset of 0 bytes from the start pointer; index 1 is offset by the size of one element."
+            },
+            {
+                id: 5,
+                section: 1,
+                sectionTitle: "1. Array Basics & Indexing",
+                question: "Attempting to access an index greater than or equal to the array length results in an 'Out of ______' error.",
+                answer: "BOUNDS",
+                hint: "Plural noun meaning limits or boundaries.",
+                explanation: "An Out of Bounds exception prevents memory corruption when code requests memory outside allocated space."
+            },
+            {
+                id: 6,
+                section: 1,
+                sectionTitle: "1. Array Basics & Indexing",
+                question: "What bracket notation symbol is universally used in languages like C, Java, and JavaScript for array indexing?",
+                answer: "SQUARE BRACKET",
+                hint: "The shape of [ ].",
+                explanation: "Square brackets [ ] are used to enclose array indices across almost all imperative programming languages."
+            },
+            {
+                id: 7,
+                section: 1,
+                sectionTitle: "1. Array Basics & Indexing",
+                question: "In Python, what type of index value allows you to retrieve elements from the back of the list (e.g., arr[-1])?",
+                answer: "NEGATIVE",
+                hint: "Opposite of positive.",
+                explanation: "Negative indexing counts backward from the end of a list in Python, with -1 representing the last item."
+            },
+            {
+                id: 8,
+                section: 1,
+                sectionTitle: "1. Array Basics & Indexing",
+                question: "What property or function measures the total number of items stored in an array?",
+                answer: "LENGTH",
+                hint: "6-letter word often accessed via .length or len().",
+                explanation: "Length represents the total count of elements inside an array data structure."
+            },
+            {
+                id: 9,
+                section: 1,
+                sectionTitle: "1. Array Basics & Indexing",
+                question: "Arrays that cannot change their size after creation are referred to as having a ______ size.",
+                answer: "FIXED",
+                hint: "Opposite of dynamic or flexible.",
+                explanation: "Static arrays have a fixed size allocated at creation time that cannot grow or shrink dynamically."
+            },
+            {
+                id: 10,
+                section: 1,
+                sectionTitle: "1. Array Basics & Indexing",
+                question: "What programming language developed by Fortran/MATLAB heritage historically defaults to 1-based indexing?",
+                answer: "JULIA",
+                hint: "5-letter modern high-level language popular in scientific computing.",
+                explanation: "Julia, MATLAB, R, and Fortran default to 1-based indexing instead of 0-based indexing."
+            },
+
+            // Section 2: Multi-Dimensional Arrays (10 Questions)
+            {
+                id: 11,
+                section: 2,
+                sectionTitle: "2. Multi-Dimensional Arrays",
+                question: "In a standard 2D array representation `grid[r][c]`, what dimension does the first bracket `[r]` represent?",
+                answer: "ROW",
+                hint: "3-letter word, horizontal line in a table.",
+                explanation: "By convention in row-major indexing, `grid[row][column]` places row selection in the first bracket."
+            },
+            {
+                id: 12,
+                section: 2,
+                sectionTitle: "2. Multi-Dimensional Arrays",
+                question: "In a standard 2D array `grid[r][c]`, what dimension does the second bracket `[c]` represent?",
+                answer: "COLUMN",
+                hint: "6-letter word, vertical line in a table.",
+                explanation: "The second bracket specifies the column position across the chosen row."
+            },
+            {
+                id: 13,
+                section: 2,
+                sectionTitle: "2. Multi-Dimensional Arrays",
+                question: "How many bracket pairs `[ ]` are required to access an element in a 3-dimensional array?",
+                answer: "THREE",
+                hint: "Number word matching 3D.",
+                explanation: "A 3D array requires 3 indices (e.g., `cube[x][y][z]`) to isolate a single point."
+            },
+            {
+                id: 14,
+                section: 2,
+                sectionTitle: "2. Multi-Dimensional Arrays",
+                question: "A multi-dimensional array where each row can have a different length is known as a ______ array.",
+                answer: "JAGGED",
+                hint: "Starts with 'J'. Uneven or rough edge.",
+                explanation: "A jagged (or ragged) array is an array of arrays where child arrays possess variable lengths."
+            },
+            {
+                id: 15,
+                section: 2,
+                sectionTitle: "2. Multi-Dimensional Arrays",
+                question: "What memory layout order stores entire rows of a 2D array in adjacent memory slots (used by C and C++)?",
+                answer: "ROW MAJOR",
+                hint: "Two words: ___ _____ order.",
+                explanation: "Row-major order stores consecutive elements of a row in contiguous memory space."
+            },
+            {
+                id: 16,
+                section: 2,
+                sectionTitle: "2. Multi-Dimensional Arrays",
+                question: "What memory layout order stores entire columns of a 2D array sequentially (used by Fortran and MATLAB)?",
+                answer: "COLUMN MAJOR",
+                hint: "Two words: ______ _____ order.",
+                explanation: "Column-major order stores column elements sequentially in physical memory."
+            },
+            {
+                id: 17,
+                section: 2,
+                sectionTitle: "2. Multi-Dimensional Arrays",
+                question: "A mathematical 2D grid structure containing numbers arranged in rows and columns is called a:",
+                answer: "MATRIX",
+                hint: "6-letter linear algebra term.",
+                explanation: "In computer science, matrices are represented using 2D arrays."
+            },
+            {
+                id: 18,
+                section: 2,
+                sectionTitle: "2. Multi-Dimensional Arrays",
+                question: "To iterate through every element of a 2D array, how many nested loops are typically needed?",
+                answer: "TWO",
+                hint: "Number of loops: outer for rows, inner for columns.",
+                explanation: "An outer loop iterates through rows, while an inner loop traverses columns within each row."
+            },
+            {
+                id: 19,
+                section: 2,
+                sectionTitle: "2. Multi-Dimensional Arrays",
+                question: "If a 2D matrix has 4 rows and 5 columns, how many total elements does it contain?",
+                answer: "TWENTY",
+                hint: "Multiply 4 by 5.",
+                explanation: "Total elements in a uniform grid equal rows multiplied by columns ($4 \\times 5 = 20$)."
+            },
+            {
+                id: 20,
+                section: 2,
+                sectionTitle: "2. Multi-Dimensional Arrays",
+                question: "In 3D tensor coordinates represented by `volume[depth][row][col]`, what dimension does the first bracket set?",
+                answer: "DEPTH",
+                hint: "5-letter word representing Z-axis layer thickness.",
+                explanation: "In 3D structures, depth usually designates the slice or layer index."
+            },
+
+            // Section 3: Regular Expressions (10 Questions)
+            {
+                id: 21,
+                section: 3,
+                sectionTitle: "3. Regular Expressions",
+                question: "In Regular Expressions, square brackets `[ ]` define a character set or character ______.",
+                answer: "CLASS",
+                hint: "5-letter term. Matches any single character contained within the brackets.",
+                explanation: "A Regex character class matches any one character from the set enclosed within `[ ]`."
+            },
+            {
+                id: 22,
+                section: 3,
+                sectionTitle: "3. Regular Expressions",
+                question: "Inside a Regex character class `[ ]`, what symbol placed at the beginning negates the match (e.g., `[^a-z]`)?",
+                answer: "CARET",
+                hint: "5-letter name of the `^` symbol.",
+                explanation: "The caret `^` at the start of a character class negates it, matching everything except those characters."
+            },
+            {
+                id: 23,
+                section: 3,
+                sectionTitle: "3. Regular Expressions",
+                question: "What character inside brackets specifies a range of characters, such as `[0-9]` or `[a-z]`?",
+                answer: "HYPHEN",
+                hint: "6-letter dash punctuation symbol.",
+                explanation: "The hyphen `-` sets a range between two characters according to their ASCII/Unicode values."
+            },
+            {
+                id: 24,
+                section: 3,
+                sectionTitle: "3. Regular Expressions",
+                question: "How many total characters in the target string are matched by the single expression pattern `[a-z]`?",
+                answer: "ONE",
+                hint: "Number word: a single character set matches ____ character position.",
+                explanation: "A single bracketed character class `[a-z]` matches exactly one character position in text."
+            },
+            {
+                id: 25,
+                section: 3,
+                sectionTitle: "3. Regular Expressions",
+                question: "To match three consecutive digits in Regex using character classes, how many `[0-9]` blocks are placed back-to-back?",
+                answer: "THREE",
+                hint: "e.g., [0-9][0-9][0-9]",
+                explanation: "Placing `[0-9][0-9][0-9]` side-by-side matches three digits in sequence."
+            },
+            {
+                id: 26,
+                section: 3,
+                sectionTitle: "3. Regular Expressions",
+                question: "What quantifier symbol in Regex indicates that the preceding group or character class occurs 0 or 1 time?",
+                answer: "QUESTION MARK",
+                hint: "Punctuation mark '?'.",
+                explanation: "The `?` quantifier makes the preceding token optional (0 or 1 match)."
+            },
+            {
+                id: 27,
+                section: 3,
+                sectionTitle: "3. Regular Expressions",
+                question: "What quantifier symbol in Regex indicates 0 or more occurrences of the preceding element?",
+                answer: "ASTERISK",
+                hint: "8-letter star symbol '*'.",
+                explanation: "The asterisk `*` matches 0 or more instances of the preceding character class or token."
+            },
+            {
+                id: 28,
+                section: 3,
+                sectionTitle: "3. Regular Expressions",
+                question: "What quantifier symbol in Regex indicates 1 or more occurrences of the preceding pattern?",
+                answer: "PLUS",
+                hint: "4-letter mathematical addition symbol '+'.",
+                explanation: "The plus `+` quantifier requires at least one occurrence of the preceding token."
+            },
+            {
+                id: 29,
+                section: 3,
+                sectionTitle: "3. Regular Expressions",
+                question: "What shorthand meta-character equivalent to `[0-9]` matches any numeric digit?",
+                answer: "BACKSLASH D",
+                hint: "Two words: symbol `\\` followed by 'd'.",
+                explanation: "`\\d` is the built-in shorthand character class for any decimal digit."
+            },
+            {
+                id: 30,
+                section: 3,
+                sectionTitle: "3. Regular Expressions",
+                question: "What shorthand Regex token matches any word character (letters, numbers, and underscores)?",
+                answer: "BACKSLASH W",
+                hint: "Two words: symbol `\\` followed by 'w'.",
+                explanation: "`\\w` represents `[a-zA-Z0-9_]`, matching alphanumeric word characters."
+            },
+
+            // Section 4: Data Structures & Memory (10 Questions)
+            {
+                id: 31,
+                section: 4,
+                sectionTitle: "4. Data Structures & Memory",
+                question: "What is the asymptotic Big-O time complexity for accessing any array element by its index `arr[i]`?",
+                answer: "O OF ONE",
+                hint: "Constant time notation. Three words.",
+                explanation: "Array element lookup takes $O(1)$ constant time because the address is directly computed."
+            },
+            {
+                id: 32,
+                section: 4,
+                sectionTitle: "4. Data Structures & Memory",
+                question: "What is the Big-O time complexity to search for an unsorted element inside a linear array of size N?",
+                answer: "O OF N",
+                hint: "Linear time notation.",
+                explanation: "Searching an unsorted array requires checking items one by one in $O(N)$ linear time."
+            },
+            {
+                id: 33,
+                section: 4,
+                sectionTitle: "4. Data Structures & Memory",
+                question: "Unlike contiguous arrays, what data structure connects nodes via memory pointers?",
+                answer: "LINKED LIST",
+                hint: "Two words. Nodes pointing to the next item.",
+                explanation: "Linked lists store elements in separate nodes where each points to the next node's address."
+            },
+            {
+                id: 34,
+                section: 4,
+                sectionTitle: "4. Data Structures & Memory",
+                question: "Dynamic array resizing (e.g. C++ vector or Python list) reallocates space by what multiplicative factor when full?",
+                answer: "TWO",
+                hint: "Common growth factor: capacity is doubled.",
+                explanation: "Dynamic arrays typically double their memory capacity upon reaching full capacity."
+            },
+            {
+                id: 35,
+                section: 4,
+                sectionTitle: "4. Data Structures & Memory",
+                question: "What variable holds the numerical memory location of another variable in languages like C/C++?",
+                answer: "POINTER",
+                hint: "7-letter word, points to an address.",
+                explanation: "A pointer stores a memory address where an object or array resides."
+            },
+            {
+                id: 36,
+                section: 4,
+                sectionTitle: "4. Data Structures & Memory",
+                question: "Inserting an element at the beginning (index 0) of an array of size N requires moving all existing elements. What time complexity does this take?",
+                answer: "O OF N",
+                hint: "Linear time because of element shifting.",
+                explanation: "Inserting at index 0 requires shifting N existing elements to the right, taking $O(N)$ time."
+            },
+            {
+                id: 37,
+                section: 4,
+                sectionTitle: "4. Data Structures & Memory",
+                question: "What region of computer memory stores dynamic allocations created at runtime?",
+                answer: "HEAP",
+                hint: "4-letter word contrasting with stack memory.",
+                explanation: "Dynamically sized arrays and objects are allocated on the memory heap."
+            },
+            {
+                id: 38,
+                section: 4,
+                sectionTitle: "4. Data Structures & Memory",
+                question: "What fast, automatic memory region holds local variables and function execution frames?",
+                answer: "STACK",
+                hint: "5-letter word for LIFO memory area.",
+                explanation: "Local variables and fixed-size stack arrays reside in stack memory frames."
+            },
+            {
+                id: 39,
+                section: 4,
+                sectionTitle: "4. Data Structures & Memory",
+                question: "What component inside the CPU cache speeds up array traversal due to spatial locality?",
+                answer: "CACHE LINE",
+                hint: "Two words. Contiguous block of memory fetched into CPU cache.",
+                explanation: "CPU cache lines fetch contiguous memory blocks, making array operations exceptionally fast."
+            },
+            {
+                id: 40,
+                section: 4,
+                sectionTitle: "4. Data Structures & Memory",
+                question: "What data structure uses a hash function to map keys to array indices for $O(1)$ average lookups?",
+                answer: "HASH TABLE",
+                hint: "Two words. Uses key-value mapping.",
+                explanation: "Hash tables (or hash maps) compute an index from a key to achieve instant lookups."
+            },
+
+            // Section 5: Algorithms & CS Theory (10 Questions)
+            {
+                id: 41,
+                section: 5,
+                sectionTitle: "5. Algorithms & CS Theory",
+                question: "What divide-and-conquer search algorithm finds an element in a sorted array in $O(\\log N)$ time?",
+                answer: "BINARY SEARCH",
+                hint: "Two words. Repeatedly divides the search interval in half.",
+                explanation: "Binary search cuts the target search space in half during each comparison on sorted arrays."
+            },
+            {
+                id: 42,
+                section: 5,
+                sectionTitle: "5. Algorithms & CS Theory",
+                question: "What simple $O(N^2)$ sorting algorithm continuously swaps adjacent elements that are in the wrong order?",
+                answer: "BUBBLE SORT",
+                hint: "Two words. Smaller/larger items 'bubble' to their position.",
+                explanation: "Bubble sort repeatedly passes through an array, swapping adjacent unsorted pairs."
+            },
+            {
+                id: 43,
+                section: 5,
+                sectionTitle: "5. Algorithms & CS Theory",
+                question: "What efficient sorting algorithm uses a 'pivot' element to partition an array into smaller sub-arrays?",
+                answer: "QUICKSORT",
+                hint: "9-letter word starting with 'Q'.",
+                explanation: "Quicksort selects a pivot and partitions items into elements smaller and larger than the pivot."
+            },
+            {
+                id: 44,
+                section: 5,
+                sectionTitle: "5. Algorithms & CS Theory",
+                question: "What sorting technique divides an array into single elements and then combines them back together in order?",
+                answer: "MERGE SORT",
+                hint: "Two words. Divide, conquer, and combine.",
+                explanation: "Merge sort recursively splits arrays into halves and merges sorted sub-lists in $O(N \\log N)$ time."
+            },
+            {
+                id: 45,
+                section: 5,
+                sectionTitle: "5. Algorithms & CS Theory",
+                question: "What algorithmic technique optimizes array calculations over sub-ranges using two boundary pointer indices?",
+                answer: "TWO POINTERS",
+                hint: "Two words. E.g. left and right trackers.",
+                explanation: "The two-pointer technique uses indices at different locations (e.g. ends) to solve array problems efficiently."
+            },
+            {
+                id: 46,
+                section: 5,
+                sectionTitle: "5. Algorithms & CS Theory",
+                question: "What array optimization algorithm maintains a continuous sub-window moved across an array?",
+                answer: "SLIDING WINDOW",
+                hint: "Two words. Moves across elements like a glass pane.",
+                explanation: "Sliding window algorithms convert nested iteration into linear time by updating boundary windows."
+            },
+            {
+                id: 47,
+                section: 5,
+                sectionTitle: "5. Algorithms & CS Theory",
+                question: "What dynamic programming algorithm finds the contiguous subarray with the largest sum in $O(N)$ time?",
+                answer: "KADANE ALGORITHM",
+                hint: "Named after Jay Kadane. Two words.",
+                explanation: "Kadane's algorithm computes maximum subarray sums in a single linear pass."
+            },
+            {
+                id: 48,
+                section: 5,
+                sectionTitle: "5. Algorithms & CS Theory",
+                question: "What algorithmic design strategy solves complex problems by breaking them down into overlapping subproblems?",
+                answer: "DYNAMIC PROGRAMMING",
+                hint: "Two words. Uses memoization or tabulation tables.",
+                explanation: "Dynamic programming stores intermediate results in arrays/tables to avoid duplicate work."
+            },
+            {
+                id: 49,
+                section: 5,
+                sectionTitle: "5. Algorithms & CS Theory",
+                question: "What term describes the condition when two different keys generate the exact same hash index in an array?",
+                answer: "COLLISION",
+                hint: "9-letter word. When two objects hit the same location.",
+                explanation: "A hash collision happens when a hash function maps two distinct keys to the same array bucket."
+            },
+            {
+                id: 50,
+                section: 5,
+                sectionTitle: "5. Algorithms & CS Theory",
+                question: "What formal model of computation uses an infinite tape and array-like cell reading/writing mechanisms?",
+                answer: "TURING MACHINE",
+                hint: "Two words. Fundamental computer science theoretical model named after Alan.",
+                explanation: "Proposed by Alan Turing in 1936, the Turing Machine manipulates symbols on a cell tape according to rules."
+            }
+        ];
+
+        // App State
+        let activeSection = "all";
+        let userAnswers = {}; // { qId: "USER_TEXT" }
+        let checkedQuestions = {}; // { qId: true/false }
+
+        // DOM Elements
+        const questionsContainer = document.getElementById('questions-container');
+        const scoreDisplay = document.getElementById('score-display');
+        const completedDisplay = document.getElementById('completed-display');
+        const progressBar = document.getElementById('progress-bar');
+
+        // Initialize App
+        document.addEventListener("DOMContentLoaded", () => {
+            renderQuestions();
+            setupEventListeners();
+            updateStats();
+        });
+
+        function setupEventListeners() {
+            // Section buttons
+            document.querySelectorAll('.section-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.section-btn').forEach(b => {
+                        b.classList.remove('active', 'bg-blue-600', 'text-white');
+                        b.classList.add('text-slate-400', 'hover:bg-slate-700', 'hover:text-white');
+                    });
+                    const target = e.currentTarget;
+                    target.classList.add('active', 'bg-blue-600', 'text-white');
+                    target.classList.remove('text-slate-400', 'hover:bg-slate-700', 'hover:text-white');
+
+                    activeSection = target.getAttribute('data-section');
+                    renderQuestions();
+                });
+            });
+
+            // Action Buttons
+            document.getElementById('check-all-btn').addEventListener('click', checkAllAnswers);
+            document.getElementById('reveal-all-btn').addEventListener('click', revealAllAnswers);
+            document.getElementById('reset-all-btn').addEventListener('click', resetQuiz);
+        }
+
+        function renderQuestions() {
+            questionsContainer.innerHTML = '';
+
+            const filteredQuestions = activeSection === "all" 
+                ? questionsData 
+                : questionsData.filter(q => q.section.toString() === activeSection);
+
+            filteredQuestions.forEach((q) => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-800 rounded-xl p-5 border border-slate-700 shadow-sm space-y-4 transition-all";
+                card.id = `question-card-${q.id}`;
+
+                // Header & Question Text
+                const header = document.createElement('div');
+                header.className = "flex justify-between items-start gap-3";
+                header.innerHTML = `
+                    <div>
+                        <span class="text-xs font-semibold px-2.5 py-1 bg-slate-700 text-blue-400 rounded-md border border-slate-600">
+                            Q${q.id} • ${q.sectionTitle}
+                        </span>
+                        <p class="text-slate-200 mt-2.5 font-medium leading-relaxed">${q.question}</p>
+                    </div>
+                `;
+
+                // Interactive Inputs Area
+                const inputsContainer = document.createElement('div');
+                inputsContainer.className = "py-2 flex flex-wrap items-center gap-y-2";
+                
+                // Construct boxes for characters (preserving spaces)
+                const words = q.answer.split(' ');
+                let charIndexCounter = 0;
+
+                words.forEach((word, wIdx) => {
+                    const wordWrapper = document.createElement('div');
+                    wordWrapper.className = "flex items-center space-x-1";
+
+                    for (let i = 0; i < word.length; i++) {
+                        const charPos = charIndexCounter;
+                        const input = document.createElement('input');
+                        input.type = "text";
+                        input.maxLength = 1;
+                        input.className = "char-input";
+                        input.dataset.qid = q.id;
+                        input.dataset.charpos = charPos;
+                        
+                        // Fill existing user input
+                        const currentAnswer = userAnswers[q.id] || "";
+                        if (currentAnswer[charPos]) {
+                            input.value = currentAnswer[charPos];
+                        }
+
+                        // Apply validation state if checked
+                        if (checkedQuestions[q.id]) {
+                            input.disabled = true;
+                            const isCharCorrect = (currentAnswer[charPos] || '').toUpperCase() === q.answer.replace(/\s+/g, '')[charPos];
+                            if (isCharCorrect) {
+                                input.classList.add('correct');
+                            } else {
+                                input.classList.add('incorrect');
+                            }
+                        }
+
+                        // Input Key Events for Focus Traversal
+                        input.addEventListener('input', (e) => handleCharInput(e, q));
+                        input.addEventListener('keydown', (e) => handleCharKeydown(e, q));
+
+                        wordWrapper.appendChild(input);
+                        charIndexCounter++;
+                    }
+
+                    inputsContainer.appendChild(wordWrapper);
+
+                    // Add spacing between words
+                    if (wIdx < words.length - 1) {
+                        const space = document.createElement('div');
+                        space.className = "space-box";
+                        inputsContainer.appendChild(space);
+                    }
+                });
+
+                // Question Action Tools
+                const toolsDiv = document.createElement('div');
+                toolsDiv.className = "flex flex-wrap justify-between items-center pt-2 border-t border-slate-700/60 gap-2";
+                
+                const isChecked = checkedQuestions[q.id];
+                
+                toolsDiv.innerHTML = `
+                    <div class="flex items-center space-x-2">
+                        <button onclick="toggleHint(${q.id})" class="text-xs text-amber-400 hover:text-amber-300 font-medium px-2.5 py-1.5 rounded bg-slate-900/40 hover:bg-slate-900 border border-amber-500/30 transition flex items-center">
+                            <i class="fa-regular fa-lightbulb mr-1.5"></i> Hint
+                        </button>
+                        <button onclick="checkQuestion(${q.id})" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-medium px-3 py-1.5 rounded transition">
+                            <i class="fa-solid fa-check mr-1"></i> Check
+                        </button>
+                        <button onclick="revealQuestion(${q.id})" class="text-xs bg-slate-700 hover:bg-slate-600 text-slate-300 font-medium px-3 py-1.5 rounded transition">
+                            Reveal
+                        </button>
+                    </div>
+                    <div id="status-tag-${q.id}">
+                        ${isChecked ? getStatusBadge(q.id) : ''}
+                    </div>
+                `;
+
+                // Hint & Explanation Box
+                const hintExplDiv = document.createElement('div');
+                hintExplDiv.id = `hint-expl-${q.id}`;
+                hintExplDiv.className = "hidden text-xs space-y-2 p-3 bg-slate-900/80 rounded-lg border border-slate-700 mt-2";
+                hintExplDiv.innerHTML = `
+                    <div id="hint-text-${q.id}" class="text-amber-300/90 hidden">
+                        <strong>Hint:</strong> ${q.hint}
+                    </div>
+                    <div id="expl-text-${q.id}" class="${isChecked ? '' : 'hidden'} text-slate-300">
+                        <strong class="text-blue-400">Explanation:</strong> ${q.explanation}
+                    </div>
+                `;
+
+                card.appendChild(header);
+                card.appendChild(inputsContainer);
+                card.appendChild(toolsDiv);
+                card.appendChild(hintExplDiv);
+
+                questionsContainer.appendChild(card);
+            });
+        }
+
+        // Handle typing inside character boxes
+        function handleCharInput(e, question) {
+            const input = e.target;
+            const qId = question.id;
+            const val = input.value.toUpperCase();
+            input.value = val;
+
+            // Update user state
+            const cleanAnswer = question.answer.replace(/\s+/g, '');
+            const inputs = document.querySelectorAll(`#question-card-${qId} .char-input`);
+            let constructed = "";
+            inputs.forEach(inp => {
+                constructed += (inp.value || " ");
+            });
+
+            userAnswers[qId] = constructed;
+
+            // Auto-advance focus to next box
+            if (val !== "") {
+                const nextPos = parseInt(input.dataset.charpos) + 1;
+                if (nextPos < cleanAnswer.length) {
+                    const nextInput = document.querySelector(`#question-card-${qId} input[data-charpos='${nextPos}']`);
+                    if (nextInput) nextInput.focus();
+                }
+            }
+            updateStats();
+        }
+
+        // Handle Backspace navigation
+        function handleCharKeydown(e, question) {
+            const input = e.target;
+            const qId = question.id;
+            if (e.key === "Backspace" && input.value === "") {
+                const prevPos = parseInt(input.dataset.charpos) - 1;
+                if (prevPos >= 0) {
+                    const prevInput = document.querySelector(`#question-card-${qId} input[data-charpos='${prevPos}']`);
+                    if (prevInput) {
+                        prevInput.focus();
+                        prevInput.value = "";
+                    }
+                }
+            }
+        }
+
+        // Check single question
+        window.checkQuestion = function(qId) {
+            const question = questionsData.find(q => q.id === qId);
+            const cleanTarget = question.answer.replace(/\s+/g, '').toUpperCase();
+            
+            const inputs = document.querySelectorAll(`#question-card-${qId} .char-input`);
+            let userVal = "";
+
+            inputs.forEach((inp, idx) => {
+                const charVal = (inp.value || '').toUpperCase();
+                userVal += charVal;
+                inp.disabled = true;
+
+                if (charVal === cleanTarget[idx]) {
+                    inp.classList.remove('incorrect');
+                    inp.classList.add('correct');
+                } else {
+                    inp.classList.remove('correct');
+                    inp.classList.add('incorrect');
+                }
+            });
+
+            checkedQuestions[qId] = true;
+
+            // Update UI status
+            document.getElementById(`status-tag-${qId}`).innerHTML = getStatusBadge(qId);
+            
+            // Show explanation
+            const hintExpl = document.getElementById(`hint-expl-${qId}`);
+            const explText = document.getElementById(`expl-text-${qId}`);
+            hintExpl.classList.remove('hidden');
+            explText.classList.remove('hidden');
+
+            updateStats();
+        };
+
+        // Reveal answer for single question
+        window.revealQuestion = function(qId) {
+            const question = questionsData.find(q => q.id === qId);
+            const cleanTarget = question.answer.replace(/\s+/g, '').toUpperCase();
+            const inputs = document.querySelectorAll(`#question-card-${qId} .char-input`);
+
+            inputs.forEach((inp, idx) => {
+                inp.value = cleanTarget[idx];
+                inp.disabled = true;
+                inp.classList.remove('incorrect');
+                inp.classList.add('correct');
+            });
+
+            userAnswers[qId] = cleanTarget;
+            checkedQuestions[qId] = true;
+
+            document.getElementById(`status-tag-${qId}`).innerHTML = getStatusBadge(qId);
+            
+            const hintExpl = document.getElementById(`hint-expl-${qId}`);
+            const explText = document.getElementById(`expl-text-${qId}`);
+            hintExpl.classList.remove('hidden');
+            explText.classList.remove('hidden');
+
+            updateStats();
+        };
+
+        // Toggle hint visibility
+        window.toggleHint = function(qId) {
+            const hintExpl = document.getElementById(`hint-expl-${qId}`);
+            const hintText = document.getElementById(`hint-text-${qId}`);
+            
+            hintExpl.classList.remove('hidden');
+            hintText.classList.toggle('hidden');
+        };
+
+        function getStatusBadge(qId) {
+            const question = questionsData.find(q => q.id === qId);
+            const cleanTarget = question.answer.replace(/\s+/g, '').toUpperCase();
+            const userStr = (userAnswers[qId] || '').trim().toUpperCase();
+
+            if (userStr === cleanTarget) {
+                return `<span class="text-xs bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-1 rounded font-semibold"><i class="fa-solid fa-circle-check mr-1"></i> Correct</span>`;
+            } else {
+                return `<span class="text-xs bg-rose-500/20 text-rose-400 border border-rose-500/40 px-2 py-1 rounded font-semibold"><i class="fa-solid fa-circle-xmark mr-1"></i> Incorrect</span>`;
+            }
+        }
+
+        function checkAllAnswers() {
+            questionsData.forEach(q => checkQuestion(q.id));
+        }
+
+        function revealAllAnswers() {
+            questionsData.forEach(q => revealQuestion(q.id));
+        }
+
+        function resetQuiz() {
+            if (confirm("Are you sure you want to reset all answers and progress?")) {
+                userAnswers = {};
+                checkedQuestions = {};
+                renderQuestions();
+                updateStats();
+            }
+        }
+
+        function updateStats() {
+            let correctCount = 0;
+            let totalChecked = 0;
+
+            questionsData.forEach(q => {
+                const cleanTarget = q.answer.replace(/\s+/g, '').toUpperCase();
+                if (checkedQuestions[q.id]) {
+                    totalChecked++;
+                    const userStr = (userAnswers[q.id] || '').trim().toUpperCase();
+                    if (userStr === cleanTarget) {
+                        correctCount++;
+                    }
+                }
+            });
+
+            scoreDisplay.textContent = `${correctCount} / 50`;
+            const percent = Math.round((totalChecked / 50) * 100);
+            completedDisplay.textContent = `${percent}%`;
+            progressBar.style.width = `${percent}%`;
+        }
+    </script>
+        <div class="pagination-container">
+  <!-- Use &laquo; for left double arrows and &raquo; for right double arrows -->
+  
+  <a href="index2.html" class="nav-btn next">Next &raquo;</a>
+</div>
+</body>
+</html>
+```eof
+
+### Key Exam Features
+1. **Interactive Character Input (`[ ]` Slots):** Every word is rendered into exact letter-count input boxes. Typing auto-advances the cursor to the next character box, and backspacing moves to the preceding slot.
+2. **50 Comprehensive Items:** Covers 5 distinct domains (Array Indexing, Multi-Dimensional Data, Regular Expressions, Data Structures & Memory, and CS Theory & Algorithms).
+3. **Instant Validation & Feedback:** Click **Check** on any item or **Check All Answers** to highlight correct/incorrect letters in green or red.
+4. **Section Filters:** Filter questions by topic using the side navigation.
+5. **Hints & Detailed Explanations:** Toggle hints for guidance or view comprehensive explanations upon checking answers.

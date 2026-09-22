@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Arrays & Loops Practice Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .quiz-input {
+            background-color: #0f172a;
+            border: 1.5px solid #475569;
+            color: #f8fafc;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .quiz-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+        }
+        .quiz-input.correct {
+            border-color: #22c55e;
+            background-color: #064e3b;
+            color: #6ee7b7;
+        }
+        .quiz-input.incorrect {
+            border-color: #ef4444;
+            background-color: #7f1d1d;
+            color: #fca5a5;
+        }
+                /* Styles the wrapper that holds the buttons */
+        .pagination-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        /* Turns the basic link text into a button */
+        .btn-nav {
+            text-decoration: none; /* Removes underline */
+            padding: 12px 24px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        /* Gray color for Previous */
+        .prev-btn {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Green color for Next */
+        .next-btn {
+            background-color: #04AA6D;
+            color: white;
+            border-color: #04AA6D;
+        }
+
+        /* Darkens the color slightly when hovering over them */
+        .btn-nav:hover {
+            opacity: 0.85;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen p-4 md:p-8 font-sans">
+
+    <div class="max-w-5xl mx-auto space-y-8">
+        <!-- Header -->
+        <header class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl">
+            <div class="flex flex-wrap justify-between items-center gap-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-white"><i class="fa-solid fa-code text-blue-400 mr-2"></i>Java Arrays & Loops Worksheet</h1>
+                    <p class="text-sm text-slate-400 mt-1">Fill in each blank to answer the questions. Check answers individually or all at once.</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="checkAll()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg font-medium transition text-sm shadow">
+                        <i class="fa-solid fa-check-double mr-1"></i> Check All
+                    </button>
+                    <button onclick="revealAll()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2 rounded-lg font-medium transition text-sm border border-slate-700">
+                        <i class="fa-solid fa-eye mr-1"></i> Reveal All
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- PART 1: Fruits3D Coding & Indexing -->
+        <section class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-6">
+            <div class="border-b border-slate-800 pb-3">
+                <h2 class="text-xl font-bold text-blue-400">
+                    Part 1: 3D Array (`Fruits3D`) Code & Lookups
+                </h2>
+                <p class="text-xs text-slate-400 mt-1">Fill in the missing code syntax and array elements for the 3D array program.</p>
+            </div>
+
+            <!-- Code Fill-in-the-Blanks -->
+            <div class="bg-slate-950 p-4 md:p-6 rounded-lg border border-slate-800 font-mono text-sm space-y-3 leading-relaxed">
+                <div>
+                    <span class="text-purple-400">public class</span> <span class="text-yellow-300">FruitsProgram</span> {
+                </div>
+                <div class="pl-4">
+                    <span class="text-purple-400">public static void</span> <span class="text-blue-400">main</span>(<span class="text-purple-400">String</span>[] args) {
+                </div>
+
+                <!-- Array Declaration -->
+                <div class="pl-8 flex flex-wrap items-center gap-2">
+                    <span class="text-slate-400">Question 1: What is the array identifier/variable name?</span>
+                    <span class="text-purple-400">String</span>[][][]
+                    <input type="text" id="f3d-name" data-ans="Fruits3D" class="quiz-input w-32 text-center">
+                    <span>= {</span>
+                    <button onclick="checkItem('f3d-name')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2 py-0.5 rounded">Check</button>
+                </div>
+
+                <!-- Matrix 0 -->
+                <div class="pl-12 text-slate-400">// Matrix 0</div>
+                <div class="pl-12 flex flex-wrap items-center gap-2">
+                    <span>{ {"Orange", "Banana", "Apple"}, {"Pineapple", "Kiwi",</span>
+                    <span class="text-amber-400 text-xs">(Q2: Matrix 0, Row 1, Col 2)</span>
+                    <input type="text" id="f3d-m0r1" data-ans='"Lansones"' class="quiz-input w-28 text-center">
+                    <span>}, {"Mangosteen",</span>
+                    <span class="text-amber-400 text-xs">(Q3: Matrix 0, Row 2, Col 1)</span>
+                    <input type="text" id="f3d-m0r2" data-ans='"Durian"' class="quiz-input w-28 text-center">
+                    <span>, "Rambutan"} },</span>
+                    <button onclick="checkGroup(['f3d-m0r1', 'f3d-m0r2'])" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2 py-0.5 rounded">Check Line</button>
+                </div>
+
+                <!-- Matrix 1 -->
+                <div class="pl-12 text-slate-400">// Matrix 1</div>
+                <div class="pl-12 flex flex-wrap items-center gap-2">
+                    <span>{ {"Coconut", "Dragonfruit", "Langka"}, {"Marang",</span>
+                    <span class="text-amber-400 text-xs">(Q4: Matrix 1, Row 1, Col 1)</span>
+                    <input type="text" id="f3d-m1r1" data-ans='"Grapes"' class="quiz-input w-28 text-center">
+                    <span>, "Blueberry"}, {</span>
+                    <span class="text-amber-400 text-xs">(Q5: Matrix 1, Row 2, Col 0)</span>
+                    <input type="text" id="f3d-m1r2" data-ans='"Raspberry"' class="quiz-input w-28 text-center">
+                    <span>, "Strawberry", "Dates"} },</span>
+                    <button onclick="checkGroup(['f3d-m1r1', 'f3d-m1r2'])" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2 py-0.5 rounded">Check Line</button>
+                </div>
+
+                <!-- Matrix 2 -->
+                <div class="pl-12 text-slate-400">// Matrix 2</div>
+                <div class="pl-12 flex flex-wrap items-center gap-2">
+                    <span>{ {</span>
+                    <span class="text-amber-400 text-xs">(Q6: Matrix 2, Row 0, Col 0)</span>
+                    <input type="text" id="f3d-m2r0" data-ans='"Pomelo"' class="quiz-input w-28 text-center">
+                    <span>, "Grapefruit", "Watermelon"}, {"Pear", "Cherry", "Plum"}, {"Avocado", "Lychee", "Jackfruit"} }</span>
+                    <button onclick="checkItem('f3d-m2r0')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2 py-0.5 rounded">Check</button>
+                </div>
+                <div class="pl-8">};</div>
+
+                <!-- Nested Loops -->
+                <div class="pl-8 text-slate-400">// Nested Loops Traversal</div>
+                <div class="pl-8 flex flex-wrap items-center gap-2">
+                    <span class="text-amber-400 text-xs">Question 7: How do you access the matrix count/length in the outer loop condition?</span>
+                </div>
+                <div class="pl-8 flex flex-wrap items-center gap-2">
+                    <span class="text-purple-400">for</span>(<span class="text-purple-400">int</span> m = 0; m &lt;
+                    <input type="text" id="f3d-l1" data-ans="Fruits3D.length" class="quiz-input w-36 text-center">
+                    <span>; m++) {</span>
+                    <button onclick="checkItem('f3d-l1')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2 py-0.5 rounded">Check</button>
+                </div>
+
+                <div class="pl-12 flex flex-wrap items-center gap-2">
+                    <span class="text-amber-400 text-xs">Question 8: How do you access row count/length for matrix m in the middle loop condition?</span>
+                </div>
+                <div class="pl-12 flex flex-wrap items-center gap-2">
+                    <span class="text-purple-400">for</span>(<span class="text-purple-400">int</span> r = 0; r &lt;
+                    <input type="text" id="f3d-l2" data-ans="Fruits3D[m].length" class="quiz-input w-44 text-center">
+                    <span>; r++) {</span>
+                    <button onclick="checkItem('f3d-l2')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2 py-0.5 rounded">Check</button>
+                </div>
+
+                <div class="pl-16 flex flex-wrap items-center gap-2">
+                    <span class="text-amber-400 text-xs">Question 9: How do you access column count/length for row r of matrix m in the inner loop condition?</span>
+                </div>
+                <div class="pl-16 flex flex-wrap items-center gap-2">
+                    <span class="text-purple-400">for</span>(<span class="text-purple-400">int</span> c = 0; c &lt;
+                    <input type="text" id="f3d-l3" data-ans="Fruits3D[m][r].length" class="quiz-input w-48 text-center">
+                    <span>; c++) {</span>
+                    <button onclick="checkItem('f3d-l3')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2 py-0.5 rounded">Check</button>
+                </div>
+                <div class="pl-20 text-emerald-400">
+                    System.out.println(Fruits3D[m][r][c]);
+                </div>
+                <div class="pl-16">}</div>
+                <div class="pl-12">}</div>
+                <div class="pl-8">}</div>
+                <div class="pl-4">}</div>
+                <div>}</div>
+            </div>
+
+            <!-- Individual Index Questions -->
+            <h3 class="font-bold text-amber-400 text-sm">3D Array Index Lookup Questions:</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-sm">
+                <div class="flex items-center space-x-2 bg-slate-950 p-2 rounded border border-slate-800">
+                    <span class="text-xs text-slate-300">Q10: What array index points to "Pomelo"?</span>
+                    <input type="text" id="p1-1" data-ans="Fruits3D[2][0][0]" class="quiz-input w-36 text-center">
+                    <button onclick="checkItem('p1-1')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded ml-auto">Check</button>
+                </div>
+                <div class="flex items-center space-x-2 bg-slate-950 p-2 rounded border border-slate-800">
+                    <span class="text-xs text-slate-300">Q11: What value is stored in Fruits3D[1][1][2]?</span>
+                    <input type="text" id="p1-2" data-ans="Blueberry" class="quiz-input w-28 text-center">
+                    <button onclick="checkItem('p1-2')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded ml-auto">Check</button>
+                </div>
+                <div class="flex items-center space-x-2 bg-slate-950 p-2 rounded border border-slate-800">
+                    <span class="text-xs text-slate-300">Q12: What array index points to "Durian"?</span>
+                    <input type="text" id="p1-3" data-ans="Fruits3D[0][2][1]" class="quiz-input w-36 text-center">
+                    <button onclick="checkItem('p1-3')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded ml-auto">Check</button>
+                </div>
+                <div class="flex items-center space-x-2 bg-slate-950 p-2 rounded border border-slate-800">
+                    <span class="text-xs text-slate-300">Q13: What value is stored in Fruits3D[0][0][1]?</span>
+                    <input type="text" id="p1-4" data-ans="Banana" class="quiz-input w-28 text-center">
+                    <button onclick="checkItem('p1-4')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded ml-auto">Check</button>
+                </div>
+                <div class="flex items-center space-x-2 bg-slate-950 p-2 rounded border border-slate-800">
+                    <span class="text-xs text-slate-300">Q14: What array index points to "Dates"?</span>
+                    <input type="text" id="p1-5" data-ans="Fruits3D[1][2][2]" class="quiz-input w-36 text-center">
+                    <button onclick="checkItem('p1-5')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded ml-auto">Check</button>
+                </div>
+                <div class="flex items-center space-x-2 bg-slate-950 p-2 rounded border border-slate-800">
+                    <span class="text-xs text-slate-300">Q15: What value is stored in Fruits3D[1][0][2]?</span>
+                    <input type="text" id="p1-6" data-ans="Langka" class="quiz-input w-28 text-center">
+                    <button onclick="checkItem('p1-6')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded ml-auto">Check</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PART 2: Indirect Games 2D Array Declaration Code -->
+        <section class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-4">
+            <div class="border-b border-slate-800 pb-3">
+                <h2 class="text-xl font-bold text-blue-400">
+                    Part 2: Indirect 2D Array Initialization (`Games`)
+                </h2>
+                <p class="text-xs text-slate-400 mt-1">Convert direct initialization into an indirect 2D array allocation and line-by-line element assignments.</p>
+            </div>
+
+            <div class="bg-slate-950 p-4 md:p-6 rounded-lg border border-slate-800 font-mono text-sm space-y-3">
+                <!-- Declaration -->
+                <div>
+                    <span class="text-amber-400 text-xs">Question 16: Declare a 2D String array variable named Games.</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <input type="text" id="p2-decl" data-ans="String[][] Games;" class="quiz-input w-64">
+                    <button onclick="checkItem('p2-decl')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                </div>
+                
+                <!-- Instantiation -->
+                <div class="pt-2">
+                    <span class="text-amber-400 text-xs">Question 17: Instantiate the Games 2D array with 2 rows and 5 columns using the new keyword.</span>
+                </div>
+                <div class="flex items-center space-x-1 flex-wrap gap-y-2">
+                    <input type="text" id="p2-ref" data-ans="Games" class="quiz-input w-24 text-center">
+                    <span>= new String[</span>
+                    <input type="text" id="p2-dim1" data-ans="2" class="quiz-input w-12 text-center">
+                    <span>][</span>
+                    <input type="text" id="p2-dim2" data-ans="5" class="quiz-input w-12 text-center">
+                    <span>];</span>
+                    <button onclick="checkGroup(['p2-ref','p2-dim1','p2-dim2'])" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded ml-2">Check Line</button>
+                </div>
+
+                <div class="text-xs text-slate-400 pt-2">// Questions 18-27: Write the full Java assignment statement for each game element in the 2D array:</div>
+
+                <!-- Assignment Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                    <div class="flex flex-col space-y-1 bg-slate-900/60 p-2 rounded border border-slate-800">
+                        <span class="text-xs text-slate-300">Q18: Assign "Soccer" to Row 0, Col 0</span>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="p2-1" data-ans='Games[0][0] = "Soccer";' class="quiz-input w-full">
+                            <button onclick="checkItem('p2-1')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-1 bg-slate-900/60 p-2 rounded border border-slate-800">
+                        <span class="text-xs text-slate-300">Q19: Assign "Chess" to Row 1, Col 0</span>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="p2-2" data-ans='Games[1][0] = "Chess";' class="quiz-input w-full">
+                            <button onclick="checkItem('p2-2')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col space-y-1 bg-slate-900/60 p-2 rounded border border-slate-800">
+                        <span class="text-xs text-slate-300">Q20: Assign "Volleyball" to Row 0, Col 1</span>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="p2-3" data-ans='Games[0][1] = "Volleyball";' class="quiz-input w-full">
+                            <button onclick="checkItem('p2-3')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-1 bg-slate-900/60 p-2 rounded border border-slate-800">
+                        <span class="text-xs text-slate-300">Q21: Assign "Scrabble" to Row 1, Col 1</span>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="p2-4" data-ans='Games[1][1] = "Scrabble";' class="quiz-input w-full">
+                            <button onclick="checkItem('p2-4')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col space-y-1 bg-slate-900/60 p-2 rounded border border-slate-800">
+                        <span class="text-xs text-slate-300">Q22: Assign "Basketball" to Row 0, Col 2</span>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="p2-5" data-ans='Games[0][2] = "Basketball";' class="quiz-input w-full">
+                            <button onclick="checkItem('p2-5')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-1 bg-slate-900/60 p-2 rounded border border-slate-800">
+                        <span class="text-xs text-slate-300">Q23: Assign "Poker" to Row 1, Col 2</span>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="p2-6" data-ans='Games[1][2] = "Poker";' class="quiz-input w-full">
+                            <button onclick="checkItem('p2-6')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col space-y-1 bg-slate-900/60 p-2 rounded border border-slate-800">
+                        <span class="text-xs text-slate-300">Q24: Assign "Tennis" to Row 0, Col 3</span>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="p2-7" data-ans='Games[0][3] = "Tennis";' class="quiz-input w-full">
+                            <button onclick="checkItem('p2-7')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-1 bg-slate-900/60 p-2 rounded border border-slate-800">
+                        <span class="text-xs text-slate-300">Q25: Assign "Sungka" to Row 1, Col 3</span>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="p2-8" data-ans='Games[1][3] = "Sungka";' class="quiz-input w-full">
+                            <button onclick="checkItem('p2-8')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col space-y-1 bg-slate-900/60 p-2 rounded border border-slate-800">
+                        <span class="text-xs text-slate-300">Q26: Assign "Badminton" to Row 0, Col 4</span>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="p2-9" data-ans='Games[0][4] = "Badminton";' class="quiz-input w-full">
+                            <button onclick="checkItem('p2-9')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-1 bg-slate-900/60 p-2 rounded border border-slate-800">
+                        <span class="text-xs text-slate-300">Q27: Assign "Checkers" to Row 1, Col 4</span>
+                        <div class="flex items-center space-x-2">
+                            <input type="text" id="p2-10" data-ans='Games[1][4] = "Checkers";' class="quiz-input w-full">
+                            <button onclick="checkItem('p2-10')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PART 3: Loop Output Tracing -->
+        <section class="bg-slate-900 p-6 rounded-xl border border-slate-800 shadow-xl space-y-4">
+            <div class="border-b border-slate-800 pb-3">
+                <h2 class="text-xl font-bold text-blue-400">
+                    Part 3: Java Loop Tracing
+                </h2>
+                <p class="text-xs text-slate-400 mt-1">Trace the output of the following Java loop step-by-step for each iteration.</p>
+            </div>
+
+            <div class="bg-slate-950 p-4 rounded border border-slate-800 text-xs font-mono text-emerald-400">
+                <pre>int sum = 1;
+for(int i = 1; i <= 20; i = i + 2) {
+    sum = sum + i;
+    System.out.println("Current sum when i = " + i + " is " + sum);
+}</pre>
+            </div>
+
+            <div class="space-y-3 font-mono text-sm">
+                <div class="flex flex-col space-y-1 bg-slate-950 p-2 rounded border border-slate-800">
+                    <span class="text-xs text-amber-400">Question 28: What is the exact console output for Iteration 1 (i = 1)?</span>
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="p3-1" data-ans="Current sum when i = 1 is 2" class="quiz-input w-full">
+                        <button onclick="checkItem('p3-1')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col space-y-1 bg-slate-950 p-2 rounded border border-slate-800">
+                    <span class="text-xs text-amber-400">Question 29: What is the exact console output for Iteration 2 (i = 3)?</span>
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="p3-2" data-ans="Current sum when i = 3 is 5" class="quiz-input w-full">
+                        <button onclick="checkItem('p3-2')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col space-y-1 bg-slate-950 p-2 rounded border border-slate-800">
+                    <span class="text-xs text-amber-400">Question 30: What is the exact console output for Iteration 3 (i = 5)?</span>
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="p3-3" data-ans="Current sum when i = 5 is 10" class="quiz-input w-full">
+                        <button onclick="checkItem('p3-3')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col space-y-1 bg-slate-950 p-2 rounded border border-slate-800">
+                    <span class="text-xs text-amber-400">Question 31: What is the exact console output for Iteration 4 (i = 7)?</span>
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="p3-4" data-ans="Current sum when i = 7 is 17" class="quiz-input w-full">
+                        <button onclick="checkItem('p3-4')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col space-y-1 bg-slate-950 p-2 rounded border border-slate-800">
+                    <span class="text-xs text-amber-400">Question 32: What is the exact console output for Iteration 5 (i = 9)?</span>
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="p3-5" data-ans="Current sum when i = 9 is 26" class="quiz-input w-full">
+                        <button onclick="checkItem('p3-5')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col space-y-1 bg-slate-950 p-2 rounded border border-slate-800">
+                    <span class="text-xs text-amber-400">Question 33: What is the exact console output for Iteration 6 (i = 11)?</span>
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="p3-6" data-ans="Current sum when i = 11 is 37" class="quiz-input w-full">
+                        <button onclick="checkItem('p3-6')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col space-y-1 bg-slate-950 p-2 rounded border border-slate-800">
+                    <span class="text-xs text-amber-400">Question 34: What is the exact console output for Iteration 7 (i = 13)?</span>
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="p3-7" data-ans="Current sum when i = 13 is 50" class="quiz-input w-full">
+                        <button onclick="checkItem('p3-7')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col space-y-1 bg-slate-950 p-2 rounded border border-slate-800">
+                    <span class="text-xs text-amber-400">Question 35: What is the exact console output for Iteration 8 (i = 15)?</span>
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="p3-8" data-ans="Current sum when i = 15 is 65" class="quiz-input w-full">
+                        <button onclick="checkItem('p3-8')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col space-y-1 bg-slate-950 p-2 rounded border border-slate-800">
+                    <span class="text-xs text-amber-400">Question 36: What is the exact console output for Iteration 9 (i = 17)?</span>
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="p3-9" data-ans="Current sum when i = 17 is 82" class="quiz-input w-full">
+                        <button onclick="checkItem('p3-9')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col space-y-1 bg-slate-950 p-2 rounded border border-slate-800">
+                    <span class="text-xs text-amber-400">Question 37: What is the exact console output for Iteration 10 (i = 19)?</span>
+                    <div class="flex items-center space-x-2">
+                        <input type="text" id="p3-10" data-ans="Current sum when i = 19 is 101" class="quiz-input w-full">
+                        <button onclick="checkItem('p3-10')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded">Check</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Check individual item
+        function checkItem(id) {
+            const input = document.getElementById(id);
+            if (!input) return;
+
+            const target = input.getAttribute('data-ans').trim().toLowerCase().replace(/\s+/g, ' ');
+            const userVal = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+
+            if (userVal === target) {
+                input.classList.remove('incorrect');
+                input.classList.add('correct');
+            } else {
+                input.classList.remove('correct');
+                input.classList.add('incorrect');
+            }
+        }
+
+        // Check group of items
+        function checkGroup(idArray) {
+            idArray.forEach(id => checkItem(id));
+        }
+
+        // Check all items
+        function checkAll() {
+            const inputs = document.querySelectorAll('.quiz-input');
+            inputs.forEach(input => {
+                if (input.id) checkItem(input.id);
+            });
+        }
+
+        // Reveal all answers
+        function revealAll() {
+            const inputs = document.querySelectorAll('.quiz-input');
+            inputs.forEach(input => {
+                input.value = input.getAttribute('data-ans');
+                input.classList.remove('incorrect');
+                input.classList.add('correct');
+            });
+        }
+    </script>
+    <div class="pagination-container">
+  <!-- Use &laquo; for left double arrows and &raquo; for right double arrows -->
+  <a href="index.html" class="nav-btn previous">&laquo; Previous</a>
+  <a href="index4.html" class="nav-btn next">Next &raquo;</a>
+</div>
+
+</body>
+</html>

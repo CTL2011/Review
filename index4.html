@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Arrays & Loops Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: #e0e0e0;
+            background-color: #0d0d0d;
+        }
+        .question-card {
+            background: #181818;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+        .question-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        .text-content {
+            white-space: pre-wrap;
+            margin: 15px 0;
+            background: #222222;
+            color: #d0d0d0;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: monospace;
+            border: 1px solid #333333;
+        }
+        .code-block {
+            font-family: monospace;
+            white-space: pre;
+            background: #000000;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 3px solid #3b82f6;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        textarea {
+            width: 100%;
+            height: 180px;
+            font-family: monospace;
+            padding: 12px;
+            border: 1px solid #333333;
+            background-color: #121212;
+            color: #f0f0f0;
+            border-radius: 4px;
+            resize: vertical;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        .blank {
+            border: none;
+            border-bottom: 2px solid #888888;
+            background: transparent;
+            color: #ffffff;
+            outline: none;
+            text-align: center;
+            font-family: monospace;
+            font-size: 15px;
+            padding: 2px 5px;
+        }
+        .blank:focus {
+            border-bottom-color: #3b82f6;
+        }
+        .blank.correct {
+            border-bottom-color: #22c55e !important;
+            background-color: #143820 !important;
+            color: #86efac;
+        }
+        .blank.incorrect {
+            border-bottom-color: #ef4444 !important;
+            background-color: #451215 !important;
+            color: #fca5a5;
+        }
+        .btn-group {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+        .btn:hover {
+            opacity: 0.85;
+        }
+        .btn-check {
+            background: #2563eb;
+            color: white;
+        }
+        .btn-hint {
+            background: #d97706;
+            color: white;
+        }
+        .hint-box, .solution {
+            display: none;
+            margin-top: 15px;
+            padding: 12px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .hint-box {
+            background: #2d2410;
+            border-left: 4px solid #d97706;
+            color: #fde68a;
+        }
+        .solution {
+            background: #0f2942;
+            border-left: 4px solid #2563eb;
+            color: #93c5fd;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+            font-family: monospace;
+        }
+        .flex-line {
+            display: flex;
+            align-items: center;
+            font-family: monospace;
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+                /* Styles the wrapper that holds the buttons */
+        .pagination-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        /* Turns the basic link text into a button */
+        .btn-nav {
+            text-decoration: none; /* Removes underline */
+            padding: 12px 24px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        /* Gray color for Previous */
+        .prev-btn {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Green color for Next */
+        .next-btn {
+            background-color: #04AA6D;
+            color: white;
+            border-color: #04AA6D;
+        }
+
+        /* Darkens the color slightly when hovering over them */
+        .btn-nav:hover {
+            opacity: 0.85;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- QUESTION 1 -->
+    <div class="question-card" id="q1">
+        <div class="question-title">Question 1: 3D Array Declaration and Nested Loop</div>
+        <p>Kindly Declare and Initialize a three-dimensional array. It's reverence variable or array name will be <b>Fruits3D</b>. It will have 3 matrices/arrays, (1st dimension), 3 rows/subarrays (2nd dimension), and 3 columns/elements (3rd dimension). The values and information will be listed down below for your reference [You could make a table representing rows and columns to better visualize how the data are stored and as advance practice]:</p>
+        
+        <div class="text-content">Matrix 1:
+Row 1: Orange, Banana, Apple
+Row 2: Pineapple, Kiwi, Lansones
+Row 3: Mangosteen, Durian, Rambutan
+
+Matrix 2:
+Row 1: Coconut, Dragonfruit, Langka
+Row 2: Marang, Grapes, Blueberry
+Row 3: Raspberry, Strawberry, Dates
+
+Matrix 3:
+Row 1: Pomelo, Grapefruit, Watermelon
+Row 2: Pear, Cherry, Plum
+Row 3: Avocado, Lychee, Jackfruit</div>
+
+        <p>Kindly proceed on creating a nested for loop to access every element showing its index on the first dimension, second dimension, and third dimension while printing out the value stored in that point of the array.</p>
+        
+        <textarea id="q1-input" placeholder="Type your Java code here..."></textarea>
+        
+        <div class="btn-group">
+            <button class="btn btn-hint" onclick="toggleDisplay('q1-hint')">💡 Hint</button>
+            <button class="btn btn-check" onclick="toggleDisplay('q1-sol')">✓ Check Answer</button>
+        </div>
+
+        <div id="q1-hint" class="hint-box">
+            <b>Hint:</b> Declare a 3D array using triple curly braces <code>String[][][] Fruits3D = {{{...}}};</code> and use 3 nested <code>for</code> loops with <code>.length</code> to iterate through each level.
+        </div>
+        <div id="q1-sol" class="solution">String[][][] Fruits3D = {
+    { {"Orange", "Banana", "Apple"}, {"Pineapple", "Kiwi", "Lansones"}, {"Mangosteen", "Durian", "Rambutan"} },
+    { {"Coconut", "Dragonfruit", "Langka"}, {"Marang", "Grapes", "Blueberry"}, {"Raspberry", "Strawberry", "Dates"} },
+    { {"Pomelo", "Grapefruit", "Watermelon"}, {"Pear", "Cherry", "Plum"}, {"Avocado", "Lychee", "Jackfruit"} }
+};
+
+for (int m = 0; m < Fruits3D.length; m++) {
+    for (int r = 0; r < Fruits3D[m].length; r++) {
+        for (int c = 0; c < Fruits3D[m][r].length; c++) {
+            System.out.println("Index [" + m + "][" + r + "][" + c + "] = " + Fruits3D[m][r][c]);
+        }
+    }
+}</div>
+    </div>
+
+    <!-- QUESTION 2 -->
+    <div class="question-card" id="q2">
+        <div class="question-title">Question 2: Accessing 3D Array Elements</div>
+        <p>Given the snippets kindly fill in the necessary Array/Index or Value to complete the statements:</p>
+        
+        <div class="grid-2">
+            <div>
+                <div style="margin-bottom:8px;"><input class="blank q2-blank" style="width: 140px" data-ans="Fruits3D[2][0][0]"> = Pomelo</div>
+                <div style="margin-bottom:8px;"><input class="blank q2-blank" style="width: 140px" data-ans="Fruits3D[0][2][1]"> = Durian</div>
+                <div style="margin-bottom:8px;"><input class="blank q2-blank" style="width: 140px" data-ans="Fruits3D[1][2][2]"> = Dates</div>
+                <div style="margin-bottom:8px;"><input class="blank q2-blank" style="width: 140px" data-ans="Fruits3D[0][1][1]"> = Kiwi</div>
+                <div style="margin-bottom:8px;"><input class="blank q2-blank" style="width: 140px" data-ans="Fruits3D[1][1][0]"> = Marang</div>
+                <div style="margin-bottom:8px;"><input class="blank q2-blank" style="width: 140px" data-ans="Fruits3D[2][1][1]"> = Cherry</div>
+            </div>
+            <div>
+                <div style="margin-bottom:8px;">Fruits3D[1][1][3] = <input class="blank q2-blank" style="width: 140px" data-ans="Blueberry|Error|IndexOutOfBoundsException"></div>
+                <div style="margin-bottom:8px;">Fruits3D[0][0][1] = <input class="blank q2-blank" style="width: 140px" data-ans="Banana"></div>
+                <div style="margin-bottom:8px;">Fruits3D[1][0][2] = <input class="blank q2-blank" style="width: 140px" data-ans="Langka"></div>
+                <div style="margin-bottom:8px;">Fruits3D[2][2][1] = <input class="blank q2-blank" style="width: 140px" data-ans="Lychee"></div>
+                <div style="margin-bottom:8px;">Fruits3D[0][2][3] = <input class="blank q2-blank" style="width: 140px" data-ans="Rambutan|Error|IndexOutOfBoundsException"></div>
+                <div style="margin-bottom:8px;">Fruits3D[2][1][0] = <input class="blank q2-blank" style="width: 140px" data-ans="Pear"></div>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-hint" onclick="toggleDisplay('q2-hint')">💡 Hint</button>
+            <button class="btn btn-check" onclick="checkBlanks('q2-blank')">✓ Check Answer</button>
+        </div>
+
+        <div id="q2-hint" class="hint-box">
+            <b>Hint:</b> Array indexing starts at <code>0</code>. The structure is <code>Fruits3D[Matrix][Row][Column]</code>. Note: Column index 3 exceeds the dimension bounds (0–2).
+        </div>
+    </div>
+
+    <!-- QUESTION 3 -->
+    <div class="question-card" id="q3">
+        <div class="question-title">Question 3: Indirect Array Declaration, Creation, and Initialization</div>
+        <p>"Array Declaration, Creation, and Initialization (Indirect)"</p>
+        <p>Given the initialized array (Direct) kindly declare a new array reference variable, create the array, and initialize per data entry.</p>
+        
+        <div class="code-block">String[][] Games = { {"Soccer", "Volleyball", "Basketball", "Tennis", "Badminton"}, {"Chess", "Scrabble", "Poker", "Sungka", "Checkers"} };</div>
+
+        <div class="flex-line" style="margin-top: 15px;">
+            <input class="blank q3-blank" style="width: 100px" data-ans="String"> [][] <input class="blank q3-blank" style="width: 140px" data-ans="Games"> ;
+        </div>
+        <div class="flex-line">
+            <input class="blank q3-blank" style="width: 100px" data-ans="Games"> = <input class="blank q3-blank" style="width: 60px" data-ans="new"> <input class="blank q3-blank" style="width: 100px" data-ans="String"> [ <input class="blank q3-blank" style="width: 40px" data-ans="2"> ] [ <input class="blank q3-blank" style="width: 40px" data-ans="5"> ] ;
+        </div>
+
+        <div style="margin-top: 15px;">
+            <script>
+                const gamesList = [
+                    "Soccer", "Volleyball", "Basketball", "Tennis", "Badminton",
+                    "Chess", "Scrabble", "Poker", "Sungka", "Checkers"
+                ];
+                for(let i = 0; i < 10; i++) {
+                    let r = i < 5 ? 0 : 1;
+                    let c = i % 5;
+                    document.write(`
+                        <div class="flex-line">
+                            <input class="blank q3-blank" style="width: 100px" data-ans="Games"> 
+                            [ <input class="blank q3-blank" style="width: 40px" data-ans="${r}"> ] 
+                            [ <input class="blank q3-blank" style="width: 40px" data-ans="${c}"> ] = 
+                            "<input class="blank q3-blank" style="width: 120px" data-ans="${gamesList[i]}">" ;
+                        </div>
+                    `);
+                }
+            </script>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-hint" onclick="toggleDisplay('q3-hint')">💡 Hint</button>
+            <button class="btn btn-check" onclick="checkBlanks('q3-blank')">✓ Check Answer</button>
+        </div>
+
+        <div id="q3-hint" class="hint-box">
+            <b>Hint:</b> Step 1: Declare with <code>String[][] Games;</code>.<br>Step 2: Allocate memory with <code>new String[2][5];</code>.<br>Step 3: Assign elements step-by-step using row 0 (0 to 4) and row 1 (0 to 4).
+        </div>
+    </div>
+
+    <!-- QUESTION 4 -->
+    <div class="question-card" id="q4">
+        <div class="question-title">Question 4: Loop Output Determination</div>
+        <p>Given the for loop below, kindly determine its output:</p>
+        
+        <div class="code-block">public class Main{
+    public static void main (String args[]){
+        int sum = 1;
+        for(int i = 1 ; i <= 20 ; i = i + 2){
+            sum = sum + i;
+            System.out.println("Current sum when i = " + i + " is " + sum);
+        }
+    }
+}</div>
+        
+        <textarea placeholder="Type the expected output line by line here..."></textarea>
+        
+        <div class="btn-group">
+            <button class="btn btn-hint" onclick="toggleDisplay('q4-hint')">💡 Hint</button>
+            <button class="btn btn-check" onclick="toggleDisplay('q4-sol')">✓ Check Answer</button>
+        </div>
+
+        <div id="q4-hint" class="hint-box">
+            <b>Hint:</b> The loop iterates starting from <code>i = 1</code> up to <code>19</code> in steps of 2. In each iteration, <code>sum = sum + i</code> is computed before printing.
+        </div>
+        <div id="q4-sol" class="solution">Current sum when i = 1 is 2
+Current sum when i = 3 is 5
+Current sum when i = 5 is 10
+Current sum when i = 7 is 17
+Current sum when i = 9 is 26
+Current sum when i = 11 is 37
+Current sum when i = 13 is 50
+Current sum when i = 15 is 65
+Current sum when i = 17 is 82
+Current sum when i = 19 is 101</div>
+    </div>
+
+    <script>
+        function toggleDisplay(id) {
+            const el = document.getElementById(id);
+            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+        }
+
+        function checkBlanks(className) {
+            const inputs = document.querySelectorAll('.' + className);
+            inputs.forEach(input => {
+                let userVal = input.value.trim().replace(/"/g, '').replace(/'/g, '').toLowerCase();
+                let validAnswers = input.getAttribute('data-ans').split('|').map(a => a.toLowerCase());
+                
+                if (validAnswers.includes(userVal)) {
+                    input.classList.remove('incorrect');
+                    input.classList.add('correct');
+                } else {
+                    input.classList.remove('correct');
+                    input.classList.add('incorrect');
+                }
+            });
+        }
+    </script>
+        <div class="pagination-container">
+  <!-- Use &laquo; for left double arrows and &raquo; for right double arrows -->
+  <a href="index2.html" class="nav-btn previous">&laquo; Previous</a>
+  
+</div>
+</body>
+</html>
